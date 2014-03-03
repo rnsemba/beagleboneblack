@@ -154,3 +154,6 @@ Will produce this DTS template for you:
       };
     };
 
+Credit
+------
+Inspired by [this perl script](http://captainunlikely.com/blog/2013/09/26/managing-the-gpio-pins-on-a-beaglebone-black/)
