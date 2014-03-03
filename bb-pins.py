@@ -107,9 +107,8 @@ DTS_TEMPLATE='''/dts-v1/;
 
 /{
   compatible = "ti,beaglebone", "ti,beaglebone-black";
-  board-name = "BEAGLESTICK-GPIO";
-  part-number = "BEAGLESTICK-GPIO";
-  manufacturer = "AppMeta";
+  board-name = "CustomizeThis";
+  part-number = "CustomizeThis";
   version = "00A0";
 
   exclusive-use =
@@ -117,12 +116,11 @@ DTS_TEMPLATE='''/dts-v1/;
 
   fragment@0 {
     target = <&am33xx_pinmux>;
-	
+
     __overlay__ {
       pinctrl_generated: RNS_Generated_Pins {
 	pinctrl-single,pins = <
 %s
-	  // 0x070 0x07  /* P9_12 60 INPUT MODE7 */
 	>;
       };
     };
@@ -153,7 +151,6 @@ class HeaderPins:
       hp = HeaderPin(*splitpinlines)
       self.pins.append(hp)
       if hp.number:
-	# print 'Adding map %d to %s' % (int(hp.number), hp)
         self.pin_map[int(hp.number)] = hp
     self.readModes()
     self.readPinGroups()
@@ -180,7 +177,6 @@ class HeaderPins:
       (_, pin, ioaddr, mode, _, _) = p
       mode = int(mode, 16)
       if int(pin) in self.pin_map.keys():
-        # print '%03d 0x%02x, %d, %d, %d, %d' % (int(pin), mode, mode & 7,(mode & 8) >> 3, (mode & 16) >> 4, (mode & 32) >> 5)
 	pin = int(pin)
 	self.pin_map[pin].current_mode = mode & 7
 	self.pin_map[pin].enable_pullupdown = (mode & 8) >> 3
@@ -212,7 +208,7 @@ class HeaderPin:
     else:
       comment_str = ''
     if self.enable_pullupdown:
-      pullup = 'Pullups/down disabled'
+      pullup = 'Pullup/down disabled'
     else:
       pullup = pullupdown[self.pullup_or_pulldown]
     return 'Header %s Name: %s Number: %s GPIO: %s %s Mode: %s (%d) Direction: %s PUD: %s %s' % (
